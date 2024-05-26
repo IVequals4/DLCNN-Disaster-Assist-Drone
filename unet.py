@@ -63,13 +63,15 @@ class ModelLoader:
         self.load_weights()
 
     def load_weights(self):
-        model_path = 'C:\\Users\\jonat\\OneDrive\\Desktop\\Repo\\DLCNN-Disaster-Assist-Drone\\app\\unet.h5'
-        if os.path.exists(model_path):
-            self.model.load_weights(model_path)
+        weights_path = '/Users/iv/Documents/bingbong/dlcnn/as3/app2/DLCNN-Disaster-Assist-Drone/unet.h5'
+        
+        if os.path.exists(weights_path):
+            self.model.load_weights(weights_path)
         else:
-            raise FileNotFoundError(f"Weights file not found at {model_path}")
+            raise FileNotFoundError(f"Weights file not found at {weights_path}")
 
     def predict(self, img):
-        img = img / 255.0  # Normalization
+        # img = img / 255.0  # Normalization
         prediction = self.model.predict(img)
-        return prediction[0, :, :, 0]  # Assuming the prediction is a single channel output
+        return prediction
+        # return prediction[0, :, :, 0]  # Assuming the prediction is a single channel output
