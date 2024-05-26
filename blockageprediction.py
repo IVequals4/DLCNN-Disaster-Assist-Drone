@@ -7,26 +7,29 @@ import math
 
 class Blob:
     def __init__(self, row, col, radius=10):
+        self.radius = radius
         self.starting = (row, col)
         self.adjacent_points = []
         self.perimeter = [self.starting]
         self.bfs_marked = []
-        self.find_adjacencies()
         self.nearby_points = []
+        self.find_adjacencies()
+        
+        # for point in self.furthest_cluster_points:
+        #     self.vec.append(self.findVecEquation(self.mid_point, point))
+        #     print(f'cluster point: {point}')
+
+    def calculateNecessities(self):
         self.mid_point = self.findMid(self.perimeter)
         # print(f'mid: {self.mid_point}')
         self.furthest_point = self.furthestPoints()
         # print(self.furthest_point)
-        self.nearby_points = self.findNearbyPoints(radius)
+        self.nearby_points = self.findNearbyPoints(self.radius)
         self.furthest_cluster_point = self.findMid(self.nearby_points)
         if self.furthest_cluster_point == self.mid_point:
             self.furthest_cluster_point = self.furthest_point
         # print(self.furthest_cluster_point)
         self.vec = self.findVecEquation(self.mid_point, self.furthest_cluster_point)
-        
-        # for point in self.furthest_cluster_points:
-        #     self.vec.append(self.findVecEquation(self.mid_point, point))
-        #     print(f'cluster point: {point}')
                     
     def find_adjacencies(self):
         queue = [self.starting]
@@ -192,6 +195,10 @@ def get_blobs(image):
             if image[i][j] != 0 and not (i, j) in marked:
                 marked.add((i, j))
                 blobs.append(Blob(i, j))
+                if len(blobs[-1].getPoints()) < 100:
+                    blobs.pop()
+                else:
+                    blobs[-1].calculateNecessities()
                 
     return marked, blobs
 
