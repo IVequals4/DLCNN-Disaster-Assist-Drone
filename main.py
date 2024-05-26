@@ -9,9 +9,9 @@ from email.mime.base import MIMEBase
 from email import encoders
 import os
 import json
-import google.auth.transport.requests
-import google_auth_oauthlib.flow
-import googleapiclient.discovery
+# import google.auth.transport.requests
+# import google_auth_oauthlib.flow
+# import googleapiclient.discovery
 import base64
 import numpy as np
 from controller import Controller
@@ -178,9 +178,23 @@ class View(tk.Frame):
         send_button.pack(pady=20)
 
     def init_about_us_section(self, content_frame):
-        about_text = "This application was developed to assist with disaster management using drone technology."
+        # "This application was developed to assist with disaster management using drone technology.\n\n"
+        about_text = ("D.A.D. was a prototype application created by three bright university all taking Deep Learning and Convolutional Nerual Networks."
+                      "Jonathon Morel, studying computer science, was the software engineer who developed the functionality of the application and contributed to annotating the dataset used to train the model."
+                      "He also committed many hours into training and testing the model across the whole development of this project."
+
+                      "Jaghadishan Navamani Ramakrishnan, a Master\'s student in AI, was a core member of the team. Jaghadish used his time to create the front end of the project and did the majority of the data preparation."
+                      "This included manually seperating photos in a large dataset for our model to be trained effectively."
+
+                      "Isaac Velayo, another student studying computer science, was the engineer who developed the final versions of the unet model and blockage algorithm used in the application."
+                      "He also created the functionaility and interactivity between the application and the model, ensuring that the visuals were easily accessed and viewed to the user."
+
+                      "Group 40: J.J.I, is a combination of the team member's names above. We are a hard working and creative group, creating this project for the intention of exploring computer vision and using it in the best way possible."
+                      "To help those in dire need and to assist in what disaster comes."
+                      )
         about_label = tk.Label(content_frame, text=about_text, font=('Helvetica', 14), wraplength=550, background='white')
-        about_label.pack(pady=20)
+        # about_label.config(height=800)
+        about_label.pack()
 
     def init_manual_section(self, content_frame):
         manual_text = (
@@ -267,6 +281,9 @@ class View(tk.Frame):
             vector_label = tk.Label(scan_window, image=vector_photo)
             vector_label.image = vector_photo
             vector_label.grid(row=1, column=2, padx=20, pady=10)
+
+            status_label = tk.Label(scan_window, text=f"Blockage Detected: {status}", font=('Helvetica', 14), background='white')
+            status_label.grid(row=3, column=0, columnspan=3, padx=20, pady=10)
 
     def attach_image(self):
         if self.images:
